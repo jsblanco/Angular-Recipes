@@ -1,10 +1,15 @@
-<app-header></app-header>
+<app-header (content)="onNavigation($event)"></app-header>
 <div class="container mt-3 overflow-auto">
   <div class="row">
     <div class="col-md-12">
-      <app-recipes></app-recipes>
-      <hr>
-      <app-shopping-list></app-shopping-list>
+      <app-recipes *ngIf="content === 'recipe'"></app-recipes>
+      <app-shopping-list  *ngIf="content === 'shopping-list'"></app-shopping-list>
     </div>
   </div>
 </div>
+
+
+
+<ng-template #shoppingList>
+<app-shopping-list></app-shopping-list>
+</ng-template>
