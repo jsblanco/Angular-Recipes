@@ -1,23 +1,45 @@
 <div class="row">
   <div class="col-xs-12">
-      <form>
-          <div class="row">
-              <div class="col-sm-5 form-group">
-                  <label for="name">Nombre</label>
-                  <input type="text" id="name" class="form-control">
-              </div>
-              <div class="col-sm-2 form-group">
-                <label for="amount">Cantidad</label>
-                <input type="number" id="amount" class="form-control">
-              </div>
-          </div>
-          <div class="row">
-              <div class="col-xs-12">
-                  <button class="btn btn-success" type="submit">Añadir</button>
-                  <button class="btn btn-danger" type="button">Eliminar</button>
-                  <button class="btn btn-info" type="button">Vaciar</button>
-              </div>
-          </div>
-      </form>
+    <form>
+      <div class="row">
+        <div class="col-sm-5 form-group">
+          <label for="name">Nombre</label>
+          <input type="text" id="name" class="form-control" #nameInput />
+        </div>
+        <div class="col-sm-2 form-group">
+          <label for="amount">Cantidad</label>
+          <input
+            type="number"
+            id="amount"
+            class="form-control"
+            value="1"
+            min="1"
+            #amountInput
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <!-- Recordar cambiar el primer botón por Type Submit más adelante -->
+          <button
+            class="btn btn-success"
+            type="button"
+            (click)="onAddIngredient(nameInput, amountInput)"
+          >
+            Añadir
+          </button>
+          <button class="btn btn-danger" type="button" (click)="onResetList()">
+            Eliminar
+          </button>
+          <button
+            class="btn btn-info"
+            type="button"
+            (click)="nameInput.value = ''; amountInput.value = 1"
+          >
+            Vaciar
+          </button>
+        </div>
+      </div>
+    </form>
   </div>
 </div>

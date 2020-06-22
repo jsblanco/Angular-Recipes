@@ -15,4 +15,12 @@ export class ShoppingListComponent {
   ];
 
   constructor() {}
+
+  addIngredient(newIngredient: Ingredient){
+    if (!newIngredient.name) return;
+    let ingredientIndex = this.ingredients.findIndex(ingredient=> ingredient.name.toLowerCase()===newIngredient.name.toLowerCase());
+    ingredientIndex ===-1
+    ? this.ingredients.push(newIngredient)
+    : this.ingredients[ingredientIndex].amount += newIngredient.amount;
+  }
 }
