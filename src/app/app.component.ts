@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   content = 'recipe';
-  title = 'ang-recipes';
+  title = 'angular-recipes';
 
   onNavigation(event) {
     this.content = event.content;

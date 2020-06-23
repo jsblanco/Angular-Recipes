@@ -24,11 +24,15 @@
           <button
             class="btn btn-success"
             type="button"
-            (click)="onAddIngredient(nameInput, amountInput)"
+            (click)="addIngredient(nameInput, amountInput)"
           >
             Añadir
           </button>
-          <button class="btn btn-danger" type="button" (click)="onResetList()">
+          <button
+            class="btn btn-danger"
+            type="button"
+            (click)="emptyShoppingList()"
+          >
             Eliminar
           </button>
           <button

@@ -1,21 +1,21 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-import { Ingredient } from "../../common/ingredient.model"
+import { Component } from '@angular/core';
+import { ShoppingListService } from '../../services/shopping-list.service';
 @Component({
   selector: 'app-shopping-list-edit',
   templateUrl: './shopping-list-edit.component.html',
-  styleUrls: ['./shopping-list-edit.component.css']
+  styleUrls: ['./shopping-list-edit.component.css'],
 })
 export class ShoppingListEditComponent {
-@Output() newIngredient = new EventEmitter<Ingredient>()
-@Output() resetList = new EventEmitter<void>()
+  constructor(private shoppingListService: ShoppingListService) {}
 
-  constructor() { }
-
-  onAddIngredient(nameInput:HTMLInputElement, amountInput: HTMLInputElement){
-    this.newIngredient.emit({name: nameInput.value.trim(), amount: +amountInput.value})
+  addIngredient(nameInput: HTMLInputElement, amountInput: HTMLInputElement) {
+    this.shoppingListService.addIngredient({
+      name: nameInput.value.trim(),
+      amount: +amountInput.value,
+    });
   }
 
-  onResetList(){
-    this.resetList.emit()
+  emptyShoppingList() {
+    this.shoppingListService.emptyShoppingList();
   }
 }

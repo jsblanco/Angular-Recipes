@@ -30,7 +30,6 @@ import { DropdownDirective } from './common/dropdown.directive';
   imports: [
     BrowserModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,20 +1,20 @@
-import { Component, Input, AfterViewChecked } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Recipe } from '../recipe.model';
-import { DropdownDirective } from "../../common/dropdown.directive"
+import { RecipesService } from '../../services/recipes.service';
 
 @Component({
   selector: 'app-recipe-info',
   templateUrl: './recipe-info.component.html',
   styleUrls: ['./recipe-info.component.css'],
 })
-export class RecipeInfoComponent implements AfterViewChecked {
-  @Input('recipe') recipe: Recipe;
+export class RecipeInfoComponent implements OnInit {
+  recipe: Recipe = this.recipesService.recipes[0];
 
-  constructor() {}
+  constructor(private recipesService: RecipesService) {}
 
-  ngAfterViewChecked(): void {
-    for (let key in this.recipe) {
-      console.log(key);
-    }
+  ngOnInit() {
+    this.recipesService.selectedRecipe.subscribe((recipe: Recipe) => {
+      this.recipe = recipe;
+    });
   }
 }
