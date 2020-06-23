@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Ingredient } from '../common/ingredient.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ShoppingListService {
+  listChanged = new EventEmitter<Ingredient[]>();
   ingredients: Ingredient[] = [
     new Ingredient('Ajos', 3),
     new Ingredient('Cebollas', 2),
@@ -13,6 +14,10 @@ export class ShoppingListService {
   ];
 
   constructor() {}
+
+  getIngredients() {
+    return [...this.ingredients];
+  }
 
   addIngredient(newIngredient: Ingredient) {
     if (!newIngredient.name) return;
@@ -23,9 +28,12 @@ export class ShoppingListService {
     ingredientIndex === -1
       ? this.ingredients.push(newIngredient)
       : (this.ingredients[ingredientIndex].amount += newIngredient.amount);
+    
+    this.listChanged.emit([...this.ingredients])
   }
 
   emptyShoppingList() {
     this.ingredients.length = 0;
+    this.listChanged.emit([...this.ingredients])
   }
 }
