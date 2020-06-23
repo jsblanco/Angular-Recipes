@@ -17,9 +17,13 @@
 </div>
 <div class="row">
   <div class="class-xs-12">
-    <div class="btn-group">
-      <button class="btn btn-info dropdown-toggle">
-        Gestionar receta <span class="carat"></span>
+    <div 
+    class="btn-group" 
+    appDropdown
+    >
+      <button type="button"  class="btn btn-info dropdown-toggle">
+        Gestionar receta
+        <span class="carat"></span>
       </button>
       <ul class="dropdown-menu">
         <li><a href="#">Añadir a lista</a></li>
@@ -37,6 +41,6 @@
 <div class="row">
   <div class="col-xs-12">
     Ingredientes:
-    {{recipe.ingredients}}
+    {{ recipe.ingredients }}
   </div>
 </div>
