@@ -9,7 +9,4 @@ export class AppComponent {
   content = 'recipe';
   title = 'angular-recipes';
 
-  onNavigation(event) {
-    this.content = event.content;
-  }
 }

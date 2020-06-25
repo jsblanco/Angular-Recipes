@@ -10,7 +10,4 @@ export class HeaderComponent {
 
   constructor() {}
 
-  relayNavigation(content) {
-    this.displayContent.emit(content);
-  }
 }

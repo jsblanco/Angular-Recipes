@@ -1,22 +1,28 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a href="#" class="navbar-brand">Recetas en Angular</a>
+      <a [routerLink]="['']" class="navbar-brand"
+        >Recetas en Angular</a
+      >
     </div>
     <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav">
-            <li><a href="#" (click)="onSelect('recipe')">Recetas</a></li>
-            <li><a href="#" (click)="onSelect('shopping-list')">Lista de la compra</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" role="button">Gestionar <span class="caret"></span> </a>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Guardar datos</a></li>
-                    <li><a href="#">Cargar datos</a></li>
-                </ul>
-            </li>
-        </ul>
+      <ul class="nav navbar-nav">
+        <li routerLinkActive="active">
+          <a [routerLink]="['recipes']">Recetas </a>
+        </li>
+        <li routerLinkActive="active">
+          <a [routerLink]="['shopping-list']">Lista de la compra</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a class="dropdown-toggle">Gestionar <span class="caret"></span> </a>
+          <ul class="dropdown-menu">
+            <li><a>Guardar datos</a></li>
+            <li><a>Cargar datos</a></li>
+          </ul>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>

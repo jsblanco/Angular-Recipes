@@ -6,12 +6,14 @@ import { ShoppingListService } from 'src/app/services/shopping-list.service';
 import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
-  selector: 'app-recipe-info',
-  templateUrl: './recipe-info.component.html',
-  styleUrls: ['./recipe-info.component.css'],
+  selector: 'app-edit-recipe',
+  templateUrl: './edit-recipe.component.html',
+  styleUrls: ['./edit-recipe.component.css']
 })
-export class RecipeInfoComponent implements OnInit {
-  recipe: Recipe; // = this.recipesService.recipes[0];
+export class EditRecipeComponent implements OnInit {
+
+  recipe: Recipe = {name:"new recipe", ingredients: [], description: "", imgPath: ""} // = this.recipesService.recipes[0];
+  editMode:boolean = false;
 
   constructor(
     private recipesService: RecipesService,
@@ -21,7 +23,10 @@ export class RecipeInfoComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      this.recipe = this.recipesService.getRecipe(+params.id);
+      if (!!params.id) {
+        this.editMode = true;
+        this.recipe = this.recipesService.getRecipe(+params.id)
+      };
     });
   }
 
@@ -30,4 +35,5 @@ export class RecipeInfoComponent implements OnInit {
       this.shoppingListService.addIngredient(ingredient);
     });
   }
+
 }

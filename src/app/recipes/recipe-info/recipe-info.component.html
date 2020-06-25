@@ -25,8 +25,8 @@
         <span class="carat"></span>
       </button>
       <ul class="dropdown-menu">
-        <li appOnHover><a style="cursor:pointer" (click)="addIngredientToList()">Añadir a lista</a></li>
-        <li appOnHover><a style="cursor:pointer">Editar receta</a></li>
+        <li appOnHover><a style="cursor:pointer" (click)="addIngredientToList()">Comprar ingredientes</a></li>
+        <li appOnHover><a style="cursor:pointer" [routerLink]='["edit"]'>Editar receta</a></li>
         <li appOnHover><a style="cursor:pointer">Eliminar receta</a></li>
       </ul>
     </div>
