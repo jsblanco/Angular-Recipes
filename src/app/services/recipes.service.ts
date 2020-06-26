@@ -1,6 +1,7 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Recipe } from '../recipes/recipe.model';
 import { Ingredient } from '../common/ingredient.model';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -23,8 +24,8 @@ export class RecipesService {
       'https://www.turismoasturias.es/documents/11022/62857/CasaChema_Fabada_1.jpg?t=1389288544723',
       [
         new Ingredient('Fabas', 5),
-        new Ingredient('Chorizos', 2),
-        new Ingredient('Morcillas', 2),
+        new Ingredient('Chorizo', 2),
+        new Ingredient('Morcilla', 2),
       ]
     ),
     new Recipe(
@@ -47,17 +48,23 @@ export class RecipesService {
         new Ingredient('Panes', 3),
       ]
     ),
+    new Recipe(
+      'Lentejas',
+      'O las tomas o las dejas',
+      'https://www.comedera.com/wp-content/uploads/2014/04/receta-de-lentejas-con-chorizo-1.jpg',
+      [
+        new Ingredient('Lentejas', 5),
+        new Ingredient('Chorizo', 2),
+        new Ingredient('Pimentón', 2),
+      ]
+    ),
   ];
 
-  selectedRecipe = new EventEmitter<Recipe>();
+  selectedRecipe = new Subject<Recipe>();
 
   constructor() {}
 
   getRecipe(id: number) {
-    // const selectedRecipe= this.recipes.find((recipe) => {
-    //   recipe.name.includes(name);
-    // });
-    // console.log({selectedRecipe})
-    return this.recipes[id]
+    return this.recipes[id];
   }
 }

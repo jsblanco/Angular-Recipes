@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { RecipesService } from '../services/recipes.service';
-import { Recipe } from "./recipe.model"
 
 @Component({
   selector: 'app-recipes',
@@ -9,5 +8,4 @@ import { Recipe } from "./recipe.model"
   providers: [RecipesService],
 })
 export class RecipesComponent {
-  selectedRecipe: Recipe
 }

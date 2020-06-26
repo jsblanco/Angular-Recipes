@@ -1,11 +1,12 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Ingredient } from '../common/ingredient.model';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ShoppingListService {
-  listChanged = new EventEmitter<Ingredient[]>();
+  listChanged = new Subject<Ingredient[]>();
   ingredients: Ingredient[] = [
     new Ingredient('Ajos', 3),
     new Ingredient('Cebollas', 2),
@@ -28,12 +29,12 @@ export class ShoppingListService {
     ingredientIndex === -1
       ? this.ingredients.push(newIngredient)
       : (this.ingredients[ingredientIndex].amount += newIngredient.amount);
-    
-    this.listChanged.emit([...this.ingredients])
+
+    this.listChanged.next([...this.ingredients]);
   }
 
   emptyShoppingList() {
     this.ingredients.length = 0;
-    this.listChanged.emit([...this.ingredients])
+    this.listChanged.next([...this.ingredients]);
   }
 }
