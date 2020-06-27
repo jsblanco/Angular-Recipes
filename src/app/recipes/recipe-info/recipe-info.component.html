@@ -27,7 +27,7 @@
       <ul class="dropdown-menu">
         <li appOnHover><a style="cursor:pointer" (click)="addIngredientToList()">Comprar ingredientes</a></li>
         <li appOnHover><a style="cursor:pointer" [routerLink]='["edit"]'>Editar receta</a></li>
-        <li appOnHover><a style="cursor:pointer">Eliminar receta</a></li>
+        <li appOnHover><a style="cursor:pointer" (click)="deleteIngredient()">Eliminar receta</a></li>
       </ul>
     </div>
   </div>

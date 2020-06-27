@@ -6,12 +6,11 @@
       <a
         class="list-group-item"
         style="cursor: pointer;"
-        *ngFor="let ingredient of ingredients"
+        *ngFor="let ingredient of ingredients; let i=index"
+        (click)="editIngredient(i)"
       >
-        <b>
-          {{ ingredient.name }}
-        </b>
-        -{{ ingredient.amount }} unidades
+        <b> {{ ingredient.name }}</b
+        >: {{ ingredient.amount }} {{ingredient.amount>1?"unidades":"unidad"}}
       </a>
     </ul>
   </div>

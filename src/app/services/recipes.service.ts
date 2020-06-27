@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class RecipesService {
+  recipesChanged = new Subject<Recipe[]>();
   recipes: Recipe[] = [
     new Recipe(
       'Gazpacho',
@@ -58,13 +59,41 @@ export class RecipesService {
         new Ingredient('Pimentón', 2),
       ]
     ),
+    new Recipe(
+      'Cocido',
+      'De Madrid al cielo',
+      'https://www.avilaautentica.es//images/recetas/xcocido_sanjuaniego.jpg.pagespeed.ic.16XjfJ3Y6A.jpg',
+      [
+        new Ingredient('Garbanzos', 3),
+        new Ingredient('Chorizo', 1),
+        new Ingredient('Morcillo', 2),
+      ]
+    ),
   ];
 
   selectedRecipe = new Subject<Recipe>();
 
   constructor() {}
 
+  getRecipes(){
+    return [...this.recipes]
+  }
+
   getRecipe(id: number) {
     return this.recipes[id];
+  }
+
+  addRecipe(recipe: Recipe) {
+    this.recipes.push(recipe);
+    this.recipesChanged.next([...this.recipes])
+  }
+
+  updateRecipe(index: number, recipe: Recipe) {
+    this.recipes[index] = recipe;
+    this.recipesChanged.next([...this.recipes])
+  }
+
+  deleteRecipe(index: number) {
+    this.recipes.splice(index, 1)
   }
 }

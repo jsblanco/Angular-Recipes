@@ -1,45 +1,50 @@
 <div class="row">
   <div class="col-xs-12">
-    <form>
+    <form (ngSubmit)="addIngredient(f)" #f="ngForm">
       <div class="row">
         <div class="col-sm-5 form-group">
           <label for="name">Nombre</label>
-          <input type="text" id="name" class="form-control" #nameInput />
+          <input
+            type="text"
+            id="name"
+            name="name"
+            ngModel
+            class="form-control"
+            required
+          />
         </div>
         <div class="col-sm-2 form-group">
           <label for="amount">Cantidad</label>
           <input
+            class="form-control"
             type="number"
             id="amount"
-            class="form-control"
-            value="1"
-            min="1"
-            #amountInput
+            name="amount"
+            min=1
+            ngModel
+            required
+            pattern="^[1-9]+[0-9]*$"
           />
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <!-- Recordar cambiar el primer botón por Type Submit más adelante -->
-          <button
-            class="btn btn-success"
-            type="button"
-            (click)="addIngredient(nameInput, amountInput)"
+          <button 
+          class="btn btn-success" 
+          type="submit" 
+          [disabled]="!f.valid"
           >
-            Añadir
+            {{!!edit  ? 'Actualizar': 'Añadir'}}
           </button>
           <button
             class="btn btn-danger"
             type="button"
-            (click)="emptyShoppingList()"
+            [disabled]="!edit"
+            (click)="deleteItem()"
           >
             Eliminar
           </button>
-          <button
-            class="btn btn-info"
-            type="button"
-            (click)="nameInput.value = ''; amountInput.value = 1"
-          >
+          <button class="btn btn-info" type="button" (click)="emptyForm()">
             Vaciar
           </button>
         </div>
