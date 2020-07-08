@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RecipeStorageService } from 'src/app/services/recipe-storage.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,8 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() {}
+  constructor(private recipeStorageService: RecipeStorageService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // this.recipeStorageService.getStoredRecipes().subscribe();
+  }
+
+  onSaveRecipes(){
+    this.recipeStorageService.storeRecipes();
+  }
+
+  onLoadRecipes(){
+    this.recipeStorageService.getStoredRecipes().subscribe();
+  }
 
 }

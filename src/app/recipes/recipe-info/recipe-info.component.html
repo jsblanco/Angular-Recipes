@@ -1,53 +1,67 @@
-<div class="row" *ngIf="!!recipe; else noneSelected">
-  <div class="col-xs-12">
-    <img
-      src="{{ recipe.imgPath }}"
-      alt="{{ recipe.name }}"
-      style="width: 100%; max-height: 450px; background-size: cover;"
-      class="img-responsive"
-    />
-  </div>
-</div>
-<div class="row">
-  <div class="col-xs-8">
-    <h1>
-      {{ recipe.name }}
-    </h1>
-  </div>
-  <div class="col-xs-4">
-    <div class="btn-group pull-right" appDropdown>
-      <button
-        type="button"
-        class="btn btn-info dropdown-toggle"
-        style="margin-top: 25px;"
-      >
-        Gestionar receta
-        <span class="carat"></span>
-      </button>
-      <ul class="dropdown-menu">
-        <li appOnHover><a style="cursor:pointer" (click)="addIngredientToList()">Comprar ingredientes</a></li>
-        <li appOnHover><a style="cursor:pointer" [routerLink]='["edit"]'>Editar receta</a></li>
-        <li appOnHover><a style="cursor:pointer" (click)="deleteIngredient()">Eliminar receta</a></li>
-      </ul>
+<div *ngIf="!!recipe; else noneSelected">
+  <div class="row">
+    <div class="col-xs-12">
+      <img
+        src="{{ recipe.imgPath }}"
+        alt="{{ recipe.name }}"
+        style="width: 100%; max-height: 450px; background-size: cover;"
+        class="img-responsive"
+      />
     </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-xs-12">
-    {{ recipe.description }}
+  <div class="row">
+    <div class="col-xs-8">
+      <h1>
+        {{ recipe.name }}
+      </h1>
+    </div>
+    <div class="col-xs-4">
+      <div class="btn-group pull-right" appDropdown>
+        <button
+          type="button"
+          class="btn btn-info dropdown-toggle"
+          style="margin-top: 25px;"
+        >
+          Gestionar receta
+          <span class="carat"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li appOnHover>
+            <a style="cursor: pointer;" (click)="addIngredientToList()"
+              >Comprar ingredientes</a
+            >
+          </li>
+          <li appOnHover>
+            <a style="cursor: pointer;" [routerLink]="['edit']"
+              >Editar receta</a
+            >
+          </li>
+          <li appOnHover>
+            <a style="cursor: pointer;" (click)="deleteIngredient()"
+              >Eliminar receta</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
-</div>
+  <div class="row">
+    <div class="col-xs-12">
+      {{ recipe.description }}
+    </div>
+  </div>
 
-<div class="row">
-  <div class="col-xs-12">
-    <h4>Ingredientes:</h4>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Ingredientes:</h4>
 
-    <li class="list-group-item" *ngFor="let ingredient of recipe.ingredients">
-      {{ ingredient.amount }} {{ ingredient.name.toLowerCase() }}
-    </li>
+      <li class="list-group-item" *ngFor="let ingredient of recipe.ingredients">
+        {{ ingredient.amount }} {{ ingredient.name.toLowerCase() }}
+      </li>
+    </div>
   </div>
 </div>
 
 <ng-template #noneSelected>
-  <h4>Please select a recipe</h4>
+  <h3>Please select a recipe from the sidebar</h3>
 </ng-template>
