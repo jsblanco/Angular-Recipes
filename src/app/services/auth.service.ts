@@ -35,21 +35,7 @@ export class AuthService {
       })
       .pipe(
         catchError((e) => {
-          let errorMessage =
-            'Se ha producido un error al intentar registrar las presentes credenciales.';
-          if (!e.error || !e.error.error) {
-            return throwError(errorMessage);
-          }
-          switch (e.error.error.message) {
-            case 'EMAIL_EXISTS':
-              errorMessage = 'Este correo ya está registrado en la plataforma.';
-              break;
-            case 'TOO_MANY_ATTEMPTS_TRY_LATER':
-              errorMessage =
-                'Demasiados intentos fallidos en poco tiempo; espere un poco antes de continuar.';
-              break;
-          }
-          return throwError(errorMessage);
+          return throwError(this.errorHandler(e));
         })
       );
   }
@@ -63,25 +49,36 @@ export class AuthService {
       })
       .pipe(
         catchError((e) => {
-          let errorMessage =
-            'Se ha producido un error al intentar acceder con las presentes credenciales.';
-          if (!e.error || !e.error.error) {
-            return throwError(errorMessage);
-          }
-          switch (e.error.error.message) {
-            case 'EMAIL_NOT_FOUND':
-              errorMessage = 'Este correo no está registrado en la plataforma.';
-              break;
-            case 'INVALID_PASSWORD':
-              errorMessage = 'La contraseña facilitada no es válida.';
-              break;
-            case 'USER_DISABLED':
-              errorMessage =
-                'El usuario indicado ha sido inhabilitado por el administrador.';
-              break;
-          }
-          return throwError(errorMessage);
+          return throwError(this.errorHandler(e));
         })
       );
+  }
+
+  private errorHandler(e) {
+    let errorMessage =
+      'Se ha producido un error indeterminado al procesar su petición.';
+    if (!e.error || !e.error.error) {
+      return throwError(errorMessage);
+    }
+    switch (e.error.error.message) {
+      case 'EMAIL_NOT_FOUND':
+        errorMessage = 'Este correo no está registrado en la plataforma.';
+        break;
+      case 'INVALID_PASSWORD':
+        errorMessage = 'La contraseña facilitada no es válida.';
+        break;
+      case 'USER_DISABLED':
+        errorMessage =
+          'El usuario indicado ha sido inhabilitado por el administrador.';
+        break;
+      case 'EMAIL_EXISTS':
+        errorMessage = 'Este correo ya está registrado en la plataforma.';
+        break;
+      case 'TOO_MANY_ATTEMPTS_TRY_LATER':
+        errorMessage =
+          'Demasiados intentos fallidos en poco tiempo; espere un poco antes de continuar.';
+        break;
+    }
+    return errorMessage;
   }
 }
