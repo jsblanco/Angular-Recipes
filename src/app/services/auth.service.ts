@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { throwError, Subject } from 'rxjs';
+import { User } from '../auth/models/user.model'
 
 export interface AuthResponseData {
   kind: string;
@@ -17,12 +18,13 @@ export interface AuthResponseData {
   providedIn: 'root',
 })
 export class AuthService {
+  user = new Subject<User>();
+
   constructor(private http: HttpClient) {}
 
   requestUrl(endpoint: string) {
     const baseUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:';
     const apiKey = '?key=AIzaSyAuAWb1CWscbV9ad94_4pp3Y1OM7-EAD6c';
-
     return baseUrl + endpoint + apiKey;
   }
 
@@ -33,11 +35,7 @@ export class AuthService {
         password: password,
         returnSecureToken: true,
       })
-      .pipe(
-        catchError((e) => {
-          return throwError(this.errorHandler(e));
-        })
-      );
+      .pipe(catchError(this.errorHandler));
   }
 
   login(email: string, password: string) {
@@ -47,14 +45,10 @@ export class AuthService {
         password: password,
         returnSecureToken: true,
       })
-      .pipe(
-        catchError((e) => {
-          return throwError(this.errorHandler(e));
-        })
-      );
+      .pipe(catchError(this.errorHandler));
   }
 
-  private errorHandler(e) {
+  private errorHandler(e: HttpErrorResponse) {
     let errorMessage =
       'Se ha producido un error indeterminado al procesar su petición.';
     if (!e.error || !e.error.error) {
@@ -79,6 +73,6 @@ export class AuthService {
           'Demasiados intentos fallidos en poco tiempo; espere un poco antes de continuar.';
         break;
     }
-    return errorMessage;
+    return throwError(errorMessage);
   }
 }

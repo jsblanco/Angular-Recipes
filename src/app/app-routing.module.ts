@@ -7,7 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { NoRecipeSelectedComponent } from './recipes/no-recipe-selected/no-recipe-selected.component';
 import { EditRecipeComponent } from './recipes/edit-recipe/edit-recipe.component';
 import { RecipeResolverService } from './services/recipe-resolver.service';
-import { AuthComponent } from './auth/auth/auth.component';
+import { AuthComponent } from './auth/auth.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
