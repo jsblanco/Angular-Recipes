@@ -7,7 +7,7 @@ import { RecipeStorageService } from 'src/app/services/recipe-storage.service';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-
+  
   constructor(private recipeStorageService: RecipeStorageService) {}
 
   ngOnInit(): void {

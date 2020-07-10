@@ -19,6 +19,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { EditRecipeComponent } from './recipes/edit-recipe/edit-recipe.component';
 import { RecipesService } from './services/recipes.service';
 import { RecipeResolverService } from './services/recipe-resolver.service';
+import { AuthComponent } from './auth/auth/auth.component';
+import { SpinnerComponent } from './common/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { RecipeResolverService } from './services/recipe-resolver.service';
     RecipeItemComponent,
     DropdownDirective,
     EditRecipeComponent,
+    AuthComponent,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule, 
