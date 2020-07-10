@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm, EmailValidator } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService, AuthResponseData } from 'src/app/services/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -8,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./auth.component.css'],
 })
 export class AuthComponent implements OnInit {
-  isLoggingIn = false;
+  isLoggingIn = true;
   isLoading = false;
   error: String = null;
 
@@ -22,21 +23,25 @@ export class AuthComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     if (!form.valid) return;
+    const { email, password } = form.value;
     this.isLoading = true;
     this.error = null;
-    const { email, password } = form.value;
+    let authObs: Observable<AuthResponseData>;
+
     this.isLoggingIn
-      ? (this.isLoading = false)
-      : this.authService.signup(email, password).subscribe(
-          (response) => {
-            this.isLoading = false;
-            console.log(response);
-          },
-          (e) => {
-            this.isLoading = false;
-            this.error=e;
-          }
-        );
+      ? (authObs = this.authService.login(email, password))
+      : (authObs = this.authService.signup(email, password));
+
+    authObs.subscribe(
+      (response) => {
+        this.isLoading = false;
+        console.log(response);
+      },
+      (e) => {
+        this.isLoading = false;
+        this.error = e;
+      }
+    );
 
     form.reset();
   }
