@@ -8,12 +8,14 @@ import { NoRecipeSelectedComponent } from './recipes/no-recipe-selected/no-recip
 import { EditRecipeComponent } from './recipes/edit-recipe/edit-recipe.component';
 import { RecipeResolverService } from './services/recipe-resolver.service';
 import { AuthComponent } from './auth/auth.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   {
     path: 'recipes',
     component: RecipesComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',
