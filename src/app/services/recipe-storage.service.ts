@@ -19,13 +19,7 @@ export class RecipeStorageService {
   ) {}
 
   getStoredRecipes() {
-    return this.auth.loggedUser.pipe(
-      take(1),
-      exhaustMap((user) => {
-        return this.http.get<Recipe[]>(this.baseUrl, {
-          params: new HttpParams().set('auth', user.token),
-        });
-      }),
+    return this.http.get<Recipe[]>(this.baseUrl).pipe(
       map((recipes: Recipe[]) =>
         recipes.map((recipe) => {
           return {

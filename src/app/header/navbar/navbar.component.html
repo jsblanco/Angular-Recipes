@@ -16,14 +16,14 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li style="cursor: pointer;" *ngIf="isAuthenticated">
-          <a>Logout</a>
+        <li *ngIf="isAuthenticated">
+          <a style="cursor: pointer;" (click)="onLogout()">Logout</a>
         </li>
         <li class="dropdown" appDropdown>
           <a class="dropdown-toggle" role="button"
             >Gestionar <span class="caret"></span>
           </a>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu"*ngIf="isAuthenticated">
             <li>
               <a style="cursor: pointer;" (click)="onSaveRecipes()"
                 >Guardar datos</a

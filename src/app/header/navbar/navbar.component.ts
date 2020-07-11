@@ -32,4 +32,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.recipeStorageService.getStoredRecipes().subscribe();
   }
 
+  onLogout(){
+    this.auth.logout();
+  }
+
 }

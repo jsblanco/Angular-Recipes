@@ -8,6 +8,7 @@ import {
 import { catchError, tap } from 'rxjs/operators';
 import { throwError, Subject, BehaviorSubject } from 'rxjs';
 import { User } from '../auth/models/user.model';
+import { Router } from '@angular/router';
 
 export interface AuthResponseData {
   kind: string;
@@ -25,7 +26,7 @@ export interface AuthResponseData {
 export class AuthService {
   loggedUser = new BehaviorSubject<User>(null);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   requestUrl(endpoint: string) {
     const baseUrl = environment.authBaseUrl;
@@ -59,11 +60,15 @@ export class AuthService {
       );
   }
 
+  logout(){
+    this.loggedUser.next(null);
+    this.router.navigate(["/auth"]);
+  }
+
   private handleAuthentication(response: AuthResponseData) {
     const { email, localId, idToken, expiresIn } = response;
     const expirationDate = new Date(new Date().getTime() + +expiresIn * 1000);
     const user = new User(email, localId, idToken, expirationDate);
-    console.log(user.email);
     this.loggedUser.next(user);
   }
 
