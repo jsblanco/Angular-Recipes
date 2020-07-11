@@ -1,8 +1,13 @@
+import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
-import { throwError, Subject } from 'rxjs';
-import { User } from '../auth/models/user.model'
+import {
+  HttpClient,
+  HttpResponse,
+  HttpErrorResponse,
+} from '@angular/common/http';
+import { catchError, tap } from 'rxjs/operators';
+import { throwError, Subject, BehaviorSubject } from 'rxjs';
+import { User } from '../auth/models/user.model';
 
 export interface AuthResponseData {
   kind: string;
@@ -18,13 +23,13 @@ export interface AuthResponseData {
   providedIn: 'root',
 })
 export class AuthService {
-  user = new Subject<User>();
+  loggedUser = new BehaviorSubject<User>(null);
 
   constructor(private http: HttpClient) {}
 
   requestUrl(endpoint: string) {
-    const baseUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:';
-    const apiKey = '?key=AIzaSyAuAWb1CWscbV9ad94_4pp3Y1OM7-EAD6c';
+    const baseUrl = environment.authBaseUrl;
+    const apiKey = environment.firebaseApiKey;
     return baseUrl + endpoint + apiKey;
   }
 
@@ -35,7 +40,10 @@ export class AuthService {
         password: password,
         returnSecureToken: true,
       })
-      .pipe(catchError(this.errorHandler));
+      .pipe(
+        catchError(this.errorHandler),
+        tap((response) => this.handleAuthentication(response))
+      );
   }
 
   login(email: string, password: string) {
@@ -45,7 +53,18 @@ export class AuthService {
         password: password,
         returnSecureToken: true,
       })
-      .pipe(catchError(this.errorHandler));
+      .pipe(
+        catchError(this.errorHandler),
+        tap((response) => this.handleAuthentication(response))
+      );
+  }
+
+  private handleAuthentication(response: AuthResponseData) {
+    const { email, localId, idToken, expiresIn } = response;
+    const expirationDate = new Date(new Date().getTime() + +expiresIn * 1000);
+    const user = new User(email, localId, idToken, expirationDate);
+    console.log(user.email);
+    this.loggedUser.next(user);
   }
 
   private errorHandler(e: HttpErrorResponse) {
