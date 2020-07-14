@@ -12,32 +12,9 @@ import { AuthGuard } from './guards/auth.guard';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
-  {
-    path: 'recipes',
-    component: RecipesComponent,
-    canActivate: [AuthGuard],
-    children: [
-      {
-        path: '',
-        component: NoRecipeSelectedComponent,
-        resolve: [RecipeResolverService],
-      },
-      { path: 'new', component: EditRecipeComponent },
-      {
-        path: ':id',
-        component: RecipeInfoComponent,
-        resolve: [RecipeResolverService],
-      },
-      {
-        path: ':id/edit',
-        component: EditRecipeComponent,
-        resolve: [RecipeResolverService],
-      },
-    ],
-  },
   { path: 'shopping-list', component: ShoppingListComponent },
   { path: 'auth', component: AuthComponent },
-  { path: '**', redirectTo: '' },
+  { path: '**', redirectTo: 'recipes' },
 ];
 
 @NgModule({
