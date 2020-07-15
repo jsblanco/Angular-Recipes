@@ -13,7 +13,7 @@ import { CommonFunctionsModule } from '../common/common-functions.module';
         FormsModule,
         CommonFunctionsModule,
         RouterModule.forChild([
-            { path: 'auth', component: AuthComponent }
+            { path: '', component: AuthComponent }
         ]),
     ]
 })

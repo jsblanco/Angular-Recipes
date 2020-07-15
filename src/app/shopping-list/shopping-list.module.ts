@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { ShoppingListComponent } from './shopping-list.component';
@@ -17,7 +16,7 @@ import { CommonFunctionsModule } from '../common/common-functions.module';
         FormsModule,
         CommonFunctionsModule,
         RouterModule.forChild([
-            { path: 'shopping-list', component: ShoppingListComponent }
+            { path: '', component: ShoppingListComponent }
         ]),
     ]
 })

@@ -6,9 +6,6 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { NavbarComponent } from './header/navbar/navbar.component';
 import { AppRoutingModule } from './app-routing.module';
-import { AuthModule } from './auth/auth.module';
-import { RecipesModule } from './recipes/recipes.module'
-import { ShoppingListModule } from './shopping-list/shopping-list.module';
 import { CommonFunctionsModule } from './common/common-functions.module';
 import { CoreModule } from './core.module'
 
@@ -19,9 +16,9 @@ import { CoreModule } from './core.module'
     NavbarComponent,
   ],
   imports: [
-    AuthModule,
-    RecipesModule,
-    ShoppingListModule,
+    //AuthModule,
+    //RecipesModule,
+    //ShoppingListModule,
     
     CommonFunctionsModule, 
     CoreModule,

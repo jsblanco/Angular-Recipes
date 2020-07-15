@@ -10,7 +10,7 @@ import { RecipeInfoComponent } from './recipe-info/recipe-info.component';
 
 const routes: Routes = [
     {
-      path: 'recipes',
+      path: '',
       component: RecipesComponent,
       canActivate: [AuthGuard],
       children: [
