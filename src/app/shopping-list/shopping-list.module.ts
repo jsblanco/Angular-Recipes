@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 
 import { ShoppingListComponent } from './shopping-list.component';
 import { ShoppingListEditComponent } from './shopping-list-edit/shopping-list-edit.component';
+import { CommonFunctionsModule } from '../common/common-functions.module';
 
 
 @NgModule({
@@ -14,7 +15,7 @@ import { ShoppingListEditComponent } from './shopping-list-edit/shopping-list-ed
     ],
     imports: [
         FormsModule,
-        CommonModule,
+        CommonFunctionsModule,
         RouterModule.forChild([
             { path: 'shopping-list', component: ShoppingListComponent }
         ]),

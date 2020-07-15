@@ -19,7 +19,7 @@
         <li *ngIf="isAuthenticated">
           <a style="cursor: pointer;" (click)="onLogout()">Logout</a>
         </li>
-        <li class="dropdown" appDropdown>
+        <li *ngIf="isAuthenticated" class="dropdown" appDropdown>
           <a class="dropdown-toggle" role="button"
             >Gestionar <span class="caret"></span>
           </a>

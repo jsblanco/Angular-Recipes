@@ -9,6 +9,7 @@ import { RecipeListComponent } from './recipe-list/recipe-list.component';
 import { RecipeInfoComponent } from './recipe-info/recipe-info.component';
 import { EditRecipeComponent } from './edit-recipe/edit-recipe.component';
 import { RecipeItemComponent } from './recipe-list/recipe-item/recipe-item.component';
+import { CommonFunctionsModule } from '../common/common-functions.module';
 
 
 @NgModule({
@@ -20,7 +21,7 @@ import { RecipeItemComponent } from './recipe-list/recipe-item/recipe-item.compo
         EditRecipeComponent, 
     ],
     imports: [
-        CommonModule,
+        CommonFunctionsModule,
         ReactiveFormsModule,
         RecipesRoutingModule,
         RouterModule
