@@ -7,7 +7,7 @@ export interface AppState {
 
 export interface State {
     editedIngredient: Ingredient;
-    editedIngredientIndex: Number;
+    editedIngredientIndex: number;
     ingredients: Ingredient[]
 }
 
@@ -51,15 +51,27 @@ export function shoppingListReducer(state = initialState, { type, payload }) {
             };
         case ShoppingListActions.UPDATE_INGREDIENT:
             updatedIngredients = [...state.ingredients];
-            updatedIngredients[payload.index] = payload.updatedIngredient;
+            updatedIngredients[state.editedIngredientIndex] = payload;
             return {
                 ...state, ingredients: updatedIngredients
             };
         case ShoppingListActions.DELETE_INGREDIENT:
             updatedIngredients = [...state.ingredients];
-            updatedIngredients.splice(payload, 1);
+            updatedIngredients.splice(state.editedIngredientIndex, 1);
             return {
                 ...state, ingredients: updatedIngredients
+            };
+        case ShoppingListActions.START_EDIT:
+            return {
+                ...state,
+                editedIngredient: {...state.ingredients[payload]},
+                editedIngredientIndex: payload,
+            };
+        case ShoppingListActions.STOP_EDIT:
+            return {
+                ...state,
+                editedIngredient: null,
+                editedIngredientIndex: -1,
             };
         default:
             return state;
