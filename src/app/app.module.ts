@@ -8,6 +8,8 @@ import { NavbarComponent } from './header/navbar/navbar.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CommonFunctionsModule } from './common/common-functions.module';
 import { CoreModule } from './core.module'
+import { StoreModule } from '@ngrx/store'
+import { shoppingListReducer } from './shopping-list/store/shopping-list.reducer';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { CoreModule } from './core.module'
     CommonFunctionsModule, 
     CoreModule,
     
+    StoreModule.forRoot({shoppingList: shoppingListReducer}),
     BrowserModule,
     HttpClientModule, 
     AppRoutingModule,
