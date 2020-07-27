@@ -1,10 +1,6 @@
 import { Ingredient } from '../../common/ingredient.model'
 import * as ShoppingListActions from './shopping-list.actions'
 
-export interface AppState {
-    shoppingList: State;
-}
-
 export interface State {
     editedIngredient: Ingredient;
     editedIngredientIndex: number;
@@ -28,30 +24,22 @@ export function shoppingListReducer(state = initialState, { type, payload }) {
 
     switch (type) {
         case ShoppingListActions.ADD_INGREDIENT:
-            const index = state.ingredients
-                .map(ingredient => ingredient.name.toLowerCase())
-                .indexOf(payload.name.toLowerCase())
-            if (index === -1) return {
-                ...state,
-                ingredients: [...state.ingredients, payload]
-            };
             updatedIngredients = [...state.ingredients];
-            updatedIngredients[index] = {
-                name: state.ingredients[index].name,
-                amount: state.ingredients[index].amount + payload.amount
-            };
+            addIngredient(updatedIngredients, payload)
             return {
                 ...state,
                 ingredients: updatedIngredients
             }
         case ShoppingListActions.ADD_INGREDIENTS:
+            updatedIngredients = [...state.ingredients];
+            payload.map((ingredient: Ingredient) => addIngredient(updatedIngredients, ingredient))
             return {
                 ...state,
-                ingredients: [...state.ingredients, ...payload]
+                ingredients: updatedIngredients
             };
         case ShoppingListActions.UPDATE_INGREDIENT:
             updatedIngredients = [...state.ingredients];
-            updatedIngredients[state.editedIngredientIndex] = payload;
+            updatedIngredients[state.editedIngredientIndex] = payload
             return {
                 ...state, ingredients: updatedIngredients
             };
@@ -64,7 +52,7 @@ export function shoppingListReducer(state = initialState, { type, payload }) {
         case ShoppingListActions.START_EDIT:
             return {
                 ...state,
-                editedIngredient: {...state.ingredients[payload]},
+                editedIngredient: { ...state.ingredients[payload] },
                 editedIngredientIndex: payload,
             };
         case ShoppingListActions.STOP_EDIT:
@@ -76,5 +64,16 @@ export function shoppingListReducer(state = initialState, { type, payload }) {
         default:
             return state;
     }
+}
 
+function addIngredient(ingredientsArray: Ingredient[], ingredient: Ingredient) {
+    const index = ingredientsArray
+        .map(ingredient => ingredient.name.trim().toLowerCase())
+        .indexOf(ingredient.name.trim().toLowerCase());
+    index === -1
+        ? ingredientsArray.push(ingredient)
+        : ingredientsArray[index] = {
+            name: ingredientsArray[index].name,
+            amount: ingredientsArray[index].amount + ingredient.amount
+        };
 }

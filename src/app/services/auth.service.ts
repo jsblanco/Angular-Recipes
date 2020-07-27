@@ -2,13 +2,15 @@ import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import {
   HttpClient,
-  HttpResponse,
   HttpErrorResponse,
 } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
-import { throwError, Subject, BehaviorSubject } from 'rxjs';
+import { throwError, BehaviorSubject } from 'rxjs';
 import { User } from '../auth/models/user.model';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import * as fromRoot from '../store/app.reducer'
+import * as AuthActions from '../auth/store/auth.actions'
 
 export interface AuthResponseData {
   kind: string;
@@ -27,7 +29,7 @@ export class AuthService {
   loggedUser = new BehaviorSubject<User>(null);
   private logoutTimer: any;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private store: Store<fromRoot.AppState>) {}
 
   requestUrl(endpoint: string) {
     const baseUrl = environment.authBaseUrl;
@@ -82,7 +84,9 @@ export class AuthService {
       const expiration =
         new Date(userData._tokenExpirationDate).getTime() -
         new Date().getTime();
-      this.loggedUser.next(loadedUser);
+        this.store.dispatch(AuthActions.Login({email: loadedUser.email, userId: loadedUser.id, token: loadedUser.token, expirationDate: new Date(userData._tokenExpirationDate) }))
+      //this.store.dispatch(AuthActions.Login(loadedUser))
+      //this.loggedUser.next(loadedUser);
       this.autoLogout(expiration);
     }
   }

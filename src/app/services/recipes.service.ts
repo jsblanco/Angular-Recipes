@@ -3,7 +3,8 @@ import { Recipe } from '../recipes/recipe.model';
 import { Ingredient } from '../common/ingredient.model';
 import { Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
-import * as ShoppingListActions from "../shopping-list/store/shopping-list.actions"
+import * as ShoppingListActions from '../shopping-list/store/shopping-list.actions'
+import * as fromRoot from '../store/app.reducer'
 //import { ShoppingListService } from './shopping-list.service';
 
 @Injectable({
@@ -79,7 +80,7 @@ export class RecipesService {
 
   constructor(
     //private ShoppingListService: ShoppingListService,
-    private store: Store
+    private store: Store<fromRoot.AppState>
   ) { }
 
   getRecipes() {
