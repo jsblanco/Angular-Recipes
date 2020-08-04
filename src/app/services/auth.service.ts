@@ -26,10 +26,10 @@ export interface AuthResponseData {
   providedIn: 'root',
 })
 export class AuthService {
-  loggedUser = new BehaviorSubject<User>(null);
+  //loggedUser = new BehaviorSubject<User>(null);
   private logoutTimer: any;
 
-  constructor(private http: HttpClient, private router: Router, private store: Store<fromRoot.AppState>) {}
+  constructor(private http: HttpClient, private router: Router, private store: Store<fromRoot.AppState>) { }
 
   requestUrl(endpoint: string) {
     const baseUrl = environment.authBaseUrl;
@@ -84,17 +84,22 @@ export class AuthService {
       const expiration =
         new Date(userData._tokenExpirationDate).getTime() -
         new Date().getTime();
-        this.store.dispatch(AuthActions.Login({email: loadedUser.email, userId: loadedUser.id, token: loadedUser.token, expirationDate: new Date(userData._tokenExpirationDate) }))
-      //this.store.dispatch(AuthActions.Login(loadedUser))
+      this.store.dispatch(AuthActions.Login({
+        email: loadedUser.email,
+        userId: loadedUser.id,
+        token: loadedUser.token,
+        expirationDate: new Date(userData._tokenExpirationDate)
+      }))
       //this.loggedUser.next(loadedUser);
       this.autoLogout(expiration);
     }
   }
 
   logout() {
-    this.loggedUser.next(null);
+    this.store.dispatch(AuthActions.Logout());
+    //this.loggedUser.next(null);
     localStorage.removeItem('loggedUser');
-    this.router.navigate(['/auth']);
+    this.router.navigate(['/auth ']);
     if (this.logoutTimer) clearTimeout(this.logoutTimer);
     this.logoutTimer = null;
   }
@@ -106,11 +111,18 @@ export class AuthService {
   }
 
   private handleAuthentication(response: AuthResponseData) {
+    const expirationDate = new Date(new Date().getTime() + +response.expiresIn * 1000);
+    this.store.dispatch(AuthActions.Login({
+      email: response.email,
+      userId: response.localId,
+      token: response.idToken,
+      expirationDate
+    }
+    ))
+    this.autoLogout(+response.expiresIn * 1000);
     const { email, localId, idToken, expiresIn } = response;
-    const expirationDate = new Date(new Date().getTime() + +expiresIn * 1000);
     const user = new User(email, localId, idToken, expirationDate);
-    this.loggedUser.next(user);
-    this.autoLogout(+expiresIn*1000);
+    //this.loggedUser.next(user);
     localStorage.setItem('loggedUser', JSON.stringify(user));
   }
 

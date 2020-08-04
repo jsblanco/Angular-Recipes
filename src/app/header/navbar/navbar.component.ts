@@ -1,7 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+
 import { RecipeStorageService } from 'src/app/services/recipe-storage.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { Subscription } from 'rxjs';
+import * as fromRoot from '../../store/app.reducer'
 
 @Component({
   selector: 'app-navbar',
@@ -12,27 +16,30 @@ export class NavbarComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
   private loggedUserSub: Subscription;
 
-  constructor(private recipeStorageService: RecipeStorageService, private auth: AuthService) {}
+  constructor(private recipeStorageService: RecipeStorageService, private auth: AuthService, private store: Store<fromRoot.AppState>) { }
 
   ngOnInit(): void {
-    this.loggedUserSub = this.auth.loggedUser.subscribe(user=>{
-      this.isAuthenticated= !!user;
-    });
+    //this.loggedUserSub = this.auth.loggedUser
+    this.loggedUserSub = this.store.select('auth')
+      .pipe(map(authState => authState.user))
+      .subscribe(user => {
+        this.isAuthenticated = !!user;
+      });
   }
 
-  ngOnDestroy(): void{
+  ngOnDestroy(): void {
     this.loggedUserSub.unsubscribe()
   }
 
-  onSaveRecipes(){
+  onSaveRecipes() {
     this.recipeStorageService.storeRecipes();
   }
 
-  onLoadRecipes(){
+  onLoadRecipes() {
     this.recipeStorageService.getStoredRecipes().subscribe();
   }
 
-  onLogout(){
+  onLogout() {
     this.auth.logout();
   }
 
