@@ -21,6 +21,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   public error: String = null;
   @ViewChild(PlaceholderDirective) alertPlaceholder: PlaceholderDirective;
   private alertSubscription: Subscription;
+  private storeSub: Subscription;
 
   constructor(
     private authService: AuthService,
@@ -36,13 +37,13 @@ export class AuthComponent implements OnInit, OnDestroy {
   onSubmit(form: NgForm) {
     if (!form.valid) return;
     const { email, password } = form.value;
-    this.isLoading = true;
     this.error = null;
-    let authObs: Observable<AuthResponseData>;
+    //this.isLoading = true;
+    //let authObs: void | Observable<AuthResponseData>;
 
     this.isLoggingIn
       ? this.store.dispatch( AuthActions.LoginStart({email, password}) ) 
-      : (authObs = this.authService.signup(email, password));
+      : this.store.dispatch( AuthActions.SignUp({email, password}) );//(authObs = this.authService.signup(email, password));
       //this.authService.login(email, password))
       // authObs.subscribe(
         //   (response) => {
@@ -60,7 +61,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(){
-    this.store.select('auth').subscribe(authState=>{
+    this.storeSub = this.store.select('auth').subscribe(authState=>{
       this.isLoading = authState.loading;
       this.error = authState.authError;
       if (!!this.error) this.showErrorAlert(this.error+'')
@@ -68,6 +69,10 @@ export class AuthComponent implements OnInit, OnDestroy {
     })
   }
 
+  ngOnDestroy() {
+    if (!!this.storeSub) this.storeSub.unsubscribe();
+    if (!!this.alertSubscription) this.alertSubscription.unsubscribe();
+  }
   
   private showErrorAlert(errorMessage: string) {
     const alertComponentFactory = this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
@@ -75,14 +80,12 @@ export class AuthComponent implements OnInit, OnDestroy {
     const alertComponent = this.alertPlaceholder.viewContainerRef.createComponent(alertComponentFactory);
     alertComponent.instance.message = errorMessage;
     this.alertSubscription = alertComponent.instance.close.subscribe(() => {
+      this.store.dispatch(AuthActions.ClearError());
       this.alertSubscription.unsubscribe();
       this.alertPlaceholder.viewContainerRef.clear();
     })
   }
 
-  ngOnDestroy() {
-    if (!!this.alertSubscription) this.alertSubscription.unsubscribe();
-  }
 
   // onCloseAlert() {
   //   this.error = null;

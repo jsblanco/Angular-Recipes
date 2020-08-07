@@ -5,7 +5,8 @@ import { Store } from '@ngrx/store';
 
 import { RecipeStorageService } from 'src/app/services/recipe-storage.service';
 import { AuthService } from 'src/app/services/auth.service';
-import * as fromRoot from '../../store/app.reducer'
+import * as fromRoot from '../../store/app.reducer';
+import * as AuthActions from '../../auth/store/auth.actions';
 
 @Component({
   selector: 'app-navbar',
@@ -28,7 +29,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.loggedUserSub.unsubscribe()
+    this.loggedUserSub.unsubscribe();
   }
 
   onSaveRecipes() {
@@ -40,7 +41,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   onLogout() {
-    this.auth.logout();
+    this.store.dispatch(AuthActions.Logout())
+    //this.auth.logout();
   }
 
 }
