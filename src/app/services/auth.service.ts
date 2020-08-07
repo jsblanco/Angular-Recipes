@@ -1,25 +1,15 @@
 import { Injectable } from '@angular/core';
-import { 
-  //throwError, 
-  BehaviorSubject } from 'rxjs';
-import { User } from '../auth/models/user.model';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../store/app.reducer'
 import * as AuthActions from '../auth/store/auth.actions'
-//import { environment } from './../../environments/environment';
+// import { throwError,   BehaviorSubject } from 'rxjs';
+// import { User } from '../auth/models/user.model';
+// import { environment } from './../../environments/environment';
 // import { HttpClient, HttpErrorResponse, } from '@angular/common/http';
 // import { catchError, tap } from 'rxjs/operators';
-//import { Router } from '@angular/router';
+// import { Router } from '@angular/router';
 
-export interface AuthResponseData {
-  kind: string;
-  idToken: string;
-  email: string;
-  refreshToken: string;
-  expiresIn: string;
-  localId: string;
-  registered?: boolean;
-}
+
 
 @Injectable({
   providedIn: 'root',

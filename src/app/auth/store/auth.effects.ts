@@ -1,16 +1,25 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Actions, ofType, Effect } from '@ngrx/effects';
 import { switchMap, catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+
 import { environment } from '../../../environments/environment';
-import { AuthResponseData } from 'src/app/services/auth.service';
 import { AuthService } from '../../services/auth.service'
 import { User } from '../../auth/models/user.model';
 import * as AuthActions from './auth.actions';
 
 interface NgRxAction { type: string; payload?: any }
+export interface AuthResponseData {
+  kind: string;
+  idToken: string;
+  email: string;
+  refreshToken: string;
+  expiresIn: string;
+  localId: string;
+  registered?: boolean;
+}
 
 @Injectable()
 export class AuthEffects {
@@ -93,7 +102,6 @@ export class AuthEffects {
           token: loadedUser.token,
           expirationDate: new Date(userData._tokenExpirationDate)
         })
-        // this.autoLogout(expiration);
       }
       return { type: 'none' }
     })
