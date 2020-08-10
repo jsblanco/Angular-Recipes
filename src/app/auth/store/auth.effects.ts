@@ -68,7 +68,7 @@ export class AuthEffects {
     ofType(AuthActions.LOGOUT),
     tap(() => {
       this.authService.clearLogoutTimer();
-      localStorage.removeItem('loggedUser');
+      localStorage.removeItem('user');
       this.router.navigate(['/auth'])
     })
   )
@@ -82,7 +82,7 @@ export class AuthEffects {
         id: string;
         _token: string;
         _tokenExpirationDate: string;
-      } = JSON.parse(localStorage.getItem('loggedUser'));
+      } = JSON.parse(localStorage.getItem('user'));
       if (!userData) return { type: 'none' };
 
       const loadedUser = new User(
@@ -119,7 +119,7 @@ export class AuthEffects {
     const token = response.idToken;
     const expirationDate = new Date(new Date().getTime() + +response.expiresIn * 1000);
     const user = new User(email, userId, token, expirationDate);
-    localStorage.setItem('loggedUser', JSON.stringify(user));
+    localStorage.setItem('user', JSON.stringify(user));
     return AuthActions.AuthenticateSuccess({ email, userId, token, expirationDate })
   }
 
