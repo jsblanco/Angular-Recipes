@@ -1,10 +1,14 @@
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Recipe } from '../recipes/recipe.model';
+import { HttpClient } from '@angular/common/http';
+import { Store } from '@ngrx/store';
+import { map, tap, } from 'rxjs/operators';
+
 import { RecipesService } from './recipes.service';
-import { map, tap, take, exhaustMap } from 'rxjs/operators';
-import { AuthService } from './auth.service';
+import { Recipe } from '../recipes/recipe.model';
+import * as fromRoot from '../store/app.reducer';
+import * as RecipesActions from '../recipes/store/recipe.actions';
+//import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +19,8 @@ export class RecipeStorageService {
   constructor(
     private http: HttpClient,
     private recipesService: RecipesService,
-    private auth: AuthService
+    private store: Store<fromRoot.AppState>
+    //private auth: AuthService
   ) {}
 
   getStoredRecipes() {
@@ -29,7 +34,8 @@ export class RecipeStorageService {
         })
       ),
       tap((recipes: Recipe[]) => {
-        this.recipesService.setRecipeList(recipes);
+        this.store.dispatch(new RecipesActions.SetRecipes(recipes))
+        //this.recipesService.setRecipeList(recipes);
       })
     );
   }
