@@ -12,6 +12,7 @@ import * as fromRoot from '../store/app.reducer'
 })
 export class RecipesService {
   recipesChanged = new Subject<Recipe[]>();
+  private recipes: Recipe[] = [];
   // // private recipes: Recipe[] = [
   // //   new Recipe(
   // //     'Gazpacho',
@@ -74,7 +75,6 @@ export class RecipesService {
   // //     ]
   // //   ),
   // // ];
-  private recipes: Recipe[] = [];
 
   selectedRecipe = new Subject<Recipe>();
 

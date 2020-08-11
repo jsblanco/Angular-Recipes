@@ -7,6 +7,7 @@ import { RecipeStorageService } from 'src/app/services/recipe-storage.service';
 import { AuthService } from 'src/app/services/auth.service';
 import * as fromRoot from '../../store/app.reducer';
 import * as AuthActions from '../../auth/store/auth.actions';
+import * as RecipeActions from '../../recipes/store/recipe.actions';
 
 @Component({
   selector: 'app-navbar',
@@ -37,7 +38,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   onLoadRecipes() {
-    this.recipeStorageService.getStoredRecipes().subscribe();
+    this.store.dispatch(new RecipeActions.FetchRecipes() )
+    //this.recipeStorageService.getStoredRecipes().subscribe();
   }
 
   onLogout() {

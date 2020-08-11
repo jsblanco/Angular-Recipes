@@ -11,7 +11,8 @@ interface User {
     email: string,
     userId: string,
     token: string,
-    expirationDate: Date
+    expirationDate: Date,
+    redirect: boolean
 }
 
 export function SignUp(payload: { email: String, password: String }) {
