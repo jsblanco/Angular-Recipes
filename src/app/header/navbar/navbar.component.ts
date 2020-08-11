@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
-import { RecipeStorageService } from 'src/app/services/recipe-storage.service';
+//import { RecipeStorageService } from 'src/app/services/recipe-storage.service';
 import { AuthService } from 'src/app/services/auth.service';
 import * as fromRoot from '../../store/app.reducer';
 import * as AuthActions from '../../auth/store/auth.actions';
@@ -18,7 +18,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
   private loggedUserSub: Subscription;
 
-  constructor(private recipeStorageService: RecipeStorageService, private auth: AuthService, private store: Store<fromRoot.AppState>) { }
+  constructor(
+    //private recipeStorageService: RecipeStorageService, 
+    private auth: AuthService, 
+    private store: Store<fromRoot.AppState>
+    ) { }
 
   ngOnInit(): void {
     //this.loggedUserSub = this.auth.loggedUser
@@ -34,7 +38,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   onSaveRecipes() {
-    this.recipeStorageService.storeRecipes();
+    this.store.dispatch(new RecipeActions.StoreRecipes() )
+    //this.recipeStorageService.storeRecipes();
   }
 
   onLoadRecipes() {

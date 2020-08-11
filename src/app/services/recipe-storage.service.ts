@@ -1,10 +1,11 @@
+/*
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { map, tap, } from 'rxjs/operators';
 
-import { RecipesService } from './recipes.service';
+//import { RecipesService } from './recipes.service';
 import { Recipe } from '../recipes/recipe.model';
 import * as fromRoot from '../store/app.reducer';
 import * as RecipesActions from '../recipes/store/recipe.actions';
@@ -18,8 +19,8 @@ export class RecipeStorageService {
 
   constructor(
     private http: HttpClient,
-    private recipesService: RecipesService,
     private store: Store<fromRoot.AppState>
+    //private recipesService: RecipesService,
     //private auth: AuthService
   ) {}
 
@@ -47,3 +48,4 @@ export class RecipeStorageService {
       .subscribe((response: Recipe[]) => console.log(response));
   }
 }
+*/

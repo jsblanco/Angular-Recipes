@@ -3,10 +3,10 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map, switchMap } from 'rxjs/operators';
 
+//import { RecipesService } from '../../services/recipes.service';
 import { Recipe } from '../recipe.model';
-import { RecipesService } from '../../services/recipes.service';
-import * as ShoppingListActions from '../../shopping-list/store/shopping-list.actions'
 import * as fromRoot from '../../store/app.reducer'
+import * as ShoppingListActions from '../../shopping-list/store/shopping-list.actions'
 import * as RecipesActions from '../store/recipe.actions'
 
 @Component({
@@ -20,7 +20,7 @@ export class RecipeInfoComponent implements OnInit {
 
   constructor(
     private store: Store<fromRoot.AppState>,
-    private recipesService: RecipesService,
+    //private recipesService: RecipesService,
     private route: ActivatedRoute,
     private router: Router
   ) { }

@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
-import { RecipesService } from '../../services/recipes.service';
+//import { RecipesService } from '../../services/recipes.service';
 import { Recipe } from '../recipe.model';
 import * as fromRoot from '../../store/app.reducer'
 
@@ -17,7 +17,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   recipesSub: Subscription
 
   constructor(
-    private recipesService: RecipesService,
+    //private recipesService: RecipesService,
     private store: Store<fromRoot.AppState>) { }
 
     ngOnInit() {

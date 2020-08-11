@@ -2,12 +2,12 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 import { Actions, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { map, take, switchMap } from 'rxjs/operators';
+import { take, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
-import { RecipeStorageService } from './recipe-storage.service'
+//import { RecipeStorageService } from './recipe-storage.service'
 import { Recipe } from '../recipes/recipe.model';
-import { RecipesService } from './recipes.service';
+//import { RecipesService } from './recipes.service';
 import * as fromRoot from '../store/app.reducer';
 import * as RecipesActions from '../recipes/store/recipe.actions';
 
@@ -19,7 +19,7 @@ export class RecipeResolverService implements Resolve<Recipe[]> {
   constructor(
     private store: Store<fromRoot.AppState>,
     private action$: Actions,
-    private recipesService: RecipesService
+    //private recipesService: RecipesService
     //private recipeStorageService: RecipeStorageService, 
   ) { }
 
