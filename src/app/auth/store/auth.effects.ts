@@ -43,7 +43,7 @@ export class AuthEffects {
   @Effect({ dispatch: false })
   authSuccess = this.actions$.pipe(
     ofType(AuthActions.AUTH_SUCCESS),
-    tap(authSuccessAction => {
+    tap((authSuccessAction: { payload }) => {
       if (!!authSuccessAction.payload.redirect) return this.router.navigate(['/recipes'])
     })
   )
